@@ -1,0 +1,18 @@
+[
+    {
+        "id": 3,
+        "name": "kaja",
+        "stock": 15,
+        "remaining_stock": 15,
+        "price": 150.0,
+        "total_sold": 0
+    },
+    {
+        "id": 4,
+        "name": "sweet",
+        "stock": 23,
+        "remaining_stock": 23,
+        "price": 324.0,
+        "total_sold": 0
+    }
+]

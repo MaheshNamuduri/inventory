@@ -1,0 +1,9 @@
+Added item: {'id': 1, 'name': 'sweet', 'stock': 10}
+Sold one unit of sweet. New stock: 9
+Added item: {'id': 2, 'name': 'pootareku', 'stock': 10}
+Added item: {'id': 3, 'name': 'avakaya', 'stock': 19}
+Sold one unit of pootareku. New stock: 9
+Sold one unit of avakaya. New stock: 18
+Sold one unit of avakaya. New stock: 17
+Sold one unit of avakaya. New stock: 16
+Sold one unit of avakaya. New stock: 15

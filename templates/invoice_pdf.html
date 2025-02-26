@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice - Your Business</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #2c3e50;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header img {
+            max-width: 200px;
+            height: auto;
+        }
+        .invoice-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h2 {
+            color: #34495e;
+            text-align: center;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        h3 {
+            color: #3498db;
+            margin: 15px 0 10px;
+            font-size: 16px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            font-size: 14px;
+        }
+        th {
+            background: #34495e;
+            color: white;
+            text-transform: uppercase;
+        }
+        .item-total, #subtotal, #taxes, #total_due {
+            font-weight: bold;
+        }
+        #subtotal, #taxes, #total_due {
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="{{ logo_path }}" alt="Your Business Logo">
+    </div>
+    <div class="invoice-container">
+        <h2>Invoice</h2>
+
+        <p><strong>Invoice Number:</strong> {{ invoice_number }}</p>
+        <p><strong>Invoice Date:</strong> {{ invoice_date }}</p>
+
+        <h3>Supplier Details</h3>
+        <p><strong>Supplier:</strong> {{ supplier_name }} - {{ supplier_contact }}</p>
+
+        <h3>Customer Details</h3>
+        <p><strong>Customer:</strong> {{ customer_name }} - {{ customer_contact }}</p>
+
+        <h3>Shipping & Delivery</h3>
+        <p><strong>Shipping Address:</strong> {{ shipping_address }}</p>
+        <p><strong>Delivery Address:</strong> {{ delivery_address }}</p>
+
+        <h3>Goods Description</h3>
+        <table>
+            <tr>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Total Price</th>
+            </tr>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>₹{{ "%.2f"|format(item.price) }}</td>
+                <td><span class="item-total">₹{{ "%.2f"|format(item.total) }}</span></td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <p><strong>Subtotal:</strong> ₹<span id="subtotal">{{ "%.2f"|format(subtotal) }}</span></p>
+        <p><strong>Taxes (10%):</strong> ₹<span id="taxes">{{ "%.2f"|format(taxes) }}</span></p>
+        <p><strong>Total Amount Due:</strong> ₹<span id="total_due">{{ "%.2f"|format(total_due) }}</span></p>
+
+        <p><strong>Invoice Due Date:</strong> {{ invoice_due_date }}</p>
+        <p><strong>Payment Terms:</strong> {{ payment_terms }}</p>
+    </div>
+</body>
+</html>

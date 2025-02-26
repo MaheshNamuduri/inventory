@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice - Your Business</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e1e2f 0%, #2c2c54 100%);
+            min-height: 100vh;
+            padding: 40px;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header img {
+            max-width: 220px;
+            height: auto;
+            transition: transform 0.3s ease, filter 0.3s ease;
+            filter: brightness(1.1);
+        }
+
+        .header img:hover {
+            transform: scale(1.05);
+            filter: brightness(1.3);
+        }
+
+        .invoice-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #252540;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        h2 {
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        h3 {
+            color: #00b4d8;
+            margin: 20px 0 10px;
+            font-size: 1.2em;
+            border-bottom: 2px solid #3a3a5c;
+            padding-bottom: 5px;
+            font-weight: 600;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        p {
+            margin: 10px 0;
+            font-size: 1em;
+        }
+
+        input[type="text"], input[type="email"], input[type="date"], input[type="number"] {
+            padding: 10px 14px;
+            border: 1px solid #3a3a5c;
+            border-radius: 8px;
+            font-size: 1em;
+            width: calc(100% - 20px);
+            max-width: 300px;
+            background: #1e1e2f;
+            color: #e0e0e0;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input[readonly] {
+            background: #2e2e4a;
+            cursor: not-allowed;
+            color: #8888a0;
+        }
+
+        input:focus {
+            border-color: #00b4d8;
+            box-shadow: 0 0 8px rgba(0, 180, 216, 0.4);
+            outline: none;
+        }
+
+        input::placeholder {
+            color: #8888a0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 20px 0;
+            background: #2e2e4a;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #3a3a5c;
+        }
+
+        th {
+            background: #1e1e2f;
+            color: #ffffff;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+        }
+
+        td input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #3a3a5c;
+            border-radius: 6px;
+            font-size: 0.9em;
+            background: #1e1e2f;
+            color: #e0e0e0;
+        }
+
+        td input:focus {
+            border-color: #00b4d8;
+            box-shadow: 0 0 8px rgba(0, 180, 216, 0.4);
+            outline: none;
+        }
+
+        .item-total {
+            font-weight: 600;
+            color: #feca57;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        button[type="button"] {
+            background: #2ecc71;
+            color: #ffffff;
+        }
+
+        button[type="button"]:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.5);
+        }
+
+        button[type="submit"] {
+            background: #00b4d8;
+            color: #ffffff;
+        }
+
+        button[type="submit"]:hover {
+            background: #0096c7;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 180, 216, 0.5);
+        }
+
+        #subtotal, #taxes, #total_due {
+            font-weight: 600;
+            color: #ff4d6d;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #00b4d8;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #0096c7;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            .invoice-container {
+                padding: 20px;
+            }
+            input[type="text"], input[type="email"], input[type="date"], input[type="number"] {
+                width: 100%;
+                max-width: none;
+            }
+            table, th, td {
+                font-size: 0.8em;
+            }
+            .header img {
+                max-width: 150px;
+            }
+        }
+    </style>
+    <script>
+        function addItem() {
+            let table = document.getElementById("itemsTable");
+            let row = table.insertRow(-1);
+            row.innerHTML = `
+                <td><input type="text" name="item_name[]" required></td>
+                <td><input type="number" name="item_quantity[]" value="1" min="1" required oninput="updateTotal(this)"></td>
+                <td><input type="number" name="item_price[]" value="0" min="0" step="0.01" required oninput="updateTotal(this)"></td>
+                <td><span class="item-total">0.00</span></td>
+            `;
+        }
+
+        function updateTotal(input) {
+            let row = input.parentElement.parentElement;
+            let quantity = parseFloat(row.cells[1].querySelector("input").value) || 0;
+            let price = parseFloat(row.cells[2].querySelector("input").value) || 0;
+            let total = row.cells[3].querySelector(".item-total");
+            total.innerText = (quantity * price).toFixed(2);
+            updateInvoiceSummary();
+        }
+
+        function updateInvoiceSummary() {
+            let totals = document.querySelectorAll(".item-total");
+            let subtotal = 0;
+            totals.forEach(total => subtotal += parseFloat(total.innerText) || 0);
+            let taxes = (subtotal * 0.10).toFixed(2);
+            let totalDue = (subtotal * 1.10).toFixed(2);
+
+            document.getElementById("subtotal").innerText = subtotal.toFixed(2);
+            document.getElementById("taxes").innerText = taxes;
+            document.getElementById("total_due").innerText = totalDue;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            updateInvoiceSummary();
+        });
+    </script>
+</head>
+<body>
+    <div class="header">
+        <img src="/static/inventory_logo.png" alt="Your Business Logo">
+    </div>
+    <div class="invoice-container">
+        <h2>Invoice</h2>
+
+        <form action="/update_invoice" method="POST" id="invoiceForm">
+            <p><strong>Invoice Number:</strong> <input type="text" name="invoice_number" value="{{ invoice_number }}" readonly></p>
+            <p><strong>Invoice Date:</strong> <input type="date" name="invoice_date" value="{{ invoice_date }}"></p>
+
+            <h3>Supplier Details</h3>
+            <p><strong>Supplier:</strong> <input type="text" name="supplier_name" value="{{ supplier_name }}"> - 
+               <input type="email" name="supplier_contact" value="{{ supplier_contact }}"></p>
+
+            <h3>Customer Details</h3>
+            <p><strong>Customer:</strong> <input type="text" name="customer_name" value="{{ customer_name }}"> - 
+               <input type="email" name="customer_contact" value="{{ customer_contact }}"></p>
+
+            <h3>Shipping & Delivery</h3>
+            <p><strong>Shipping Address:</strong> <input type="text" name="shipping_address" value="{{ shipping_address }}"></p>
+            <p><strong>Delivery Address:</strong> <input type="text" name="delivery_address" value="{{ delivery_address }}"></p>
+
+            <h3>Goods Description</h3>
+            <table id="itemsTable">
+                <tr>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Total Price</th>
+                </tr>
+                {% for item in items %}
+                <tr>
+                    <td><input type="text" name="item_name[]" value="{{ item.name }}"></td>
+                    <td><input type="number" name="item_quantity[]" value="{{ item.quantity }}" step="1" min="0" oninput="updateTotal(this)"></td>
+                    <td><input type="number" name="item_price[]" value="{{ item.price }}" step="0.01" min="0" oninput="updateTotal(this)"></td>
+                    <td><span class="item-total">{{ "%.2f"|format(item.total) }}</span></td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <button type="button" onclick="addItem()">Add Item</button>
+
+            <p><strong>Subtotal:</strong> ₹<span id="subtotal">{{ "%.2f"|format(subtotal) }}</span></p>
+            <p><strong>Taxes (10%):</strong> ₹<span id="taxes">{{ "%.2f"|format(taxes) }}</span></p>
+            <p><strong>Total Amount Due:</strong> ₹<span id="total_due">{{ "%.2f"|format(total_due) }}</span></p>
+
+            <p><strong>Invoice Due Date:</strong> <input type="date" name="invoice_due_date" value="{{ invoice_due_date }}"></p>
+            <p><strong>Payment Terms:</strong> <input type="text" name="payment_terms" value="{{ payment_terms }}"></p>
+
+            <button type="submit">Update Invoice</button>
+            <button type="submit" formaction="/download_invoice">Download PDF</button>
+        </form>
+
+        <a href="/">Back to Inventory</a>
+    </div>
+</body>
+</html>
